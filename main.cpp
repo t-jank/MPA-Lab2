@@ -28,7 +28,7 @@ public:
     void Show_history(){
         cout << "Dostawa " << "Liczba sztuk " << "Cena" << endl;
         for(int i=0; i < history_prices.size(); i++){
-            cout << i+1 << history_quantities[i] << history_prices[i] << endl;
+            cout << i+1 <<"  "<< history_quantities[i] <<"  "<< history_prices[i] << endl;
         }
     }
 
@@ -40,19 +40,20 @@ public:
 int main()
 {
     vector < Product > magazyn;
-    int choice=0;
-    while(choice!=3){
+    char choice='1';
+    while(choice!='4'){
         //system("cls");
         cout << "\n/// Menu glowne ///\n"
              << "1. Stan magazynu\n"
              << "2. Dodaj produkt\n"
-             << "3. Zakoncz\n"
+             << "3. Historia dostaw\n"
+             << "4. Zakoncz\n"
              << "Wybor: ";
         cin>>choice;
         cout << endl;
         switch(choice)
         {
-        case 1:
+        case '1':
             cout << "Stan magazynu:\n";
             for(int i=0; i<magazyn.size(); i++){
                 cout << i+1 << ". ";
@@ -60,7 +61,7 @@ int main()
             }
             cout << endl;
             break;
-        case 2:{
+        case '2':{
             int i=0;
             cout << "/// Dodawanie produktu ///\n";
             for(i=0; i<magazyn.size(); i++){
@@ -71,7 +72,9 @@ int main()
             cout << i+1 << ". Nowy produkt\n";
             cout << i+2 << ". Anuluj\n";
             cout << "Wybierz produkt: ";
-            cin >> product_number;
+            char chosen_product;
+            cin >> chosen_product;
+            product_number = chosen_product - '0';
             if(product_number == i+2) {cout<<endl; break;}
             if(product_number < 1 || product_number > i+1) {cout<<endl; break;}
 
@@ -98,6 +101,25 @@ int main()
             cout << endl;
             break;
         }
+        case '3':{
+            int i=0;
+            cout << "/// Historia dostaw ///\n";
+            for(i=0; i<magazyn.size(); i++){
+                cout << i+1 << ". " << magazyn[i].name << endl;
+            }
+            cout << i+1 << ". Anuluj\n";
+            cout << "Wybierz produkt: ";
+            char chosen_product;
+            int product_number = -1;
+            cin >> chosen_product;
+            product_number = chosen_product - '0';
+            if(product_number == i+1) {cout<<endl; break;}
+            if(product_number < 1 || product_number > i+1) {cout<<endl; break;}
+            magazyn[product_number-1].Show_history();
+            cout<<"aktualnie:";
+            magazyn[product_number-1].Show();
+        }
+
         default:
             break;
         }
