@@ -11,10 +11,10 @@ public:
     string name;
     int quantity;
     float price;
-private:
+//private:
 vector < float > history_prices;
     vector < int > history_quantities;
-public:
+//public:
     void Add(int qu, float pr){
         history_prices.push_back(price);
         price = pr;
@@ -40,14 +40,25 @@ public:
 int main()
 {
     vector < Product > magazyn;
+
+    // reczne wprowadzenie istniejacej bazy
+    Product a;
+    magazyn.push_back(a);
+    magazyn[0].name = "Komputery";
+    magazyn[0].quantity = 40;
+    magazyn[0].price = 124;
+    magazyn[0].history_prices.push_back(100.0); ///tu cos nie dziala z tym
+
+
     char choice='1';
-    while(choice!='4'){
+    while(choice!='5'){
         //system("cls");
         cout << "\n/// Menu glowne ///\n"
              << "1. Stan magazynu\n"
              << "2. Dodaj produkt\n"
              << "3. Historia dostaw\n"
-             << "4. Zakoncz\n"
+             << "4. Edycja stanu magazynu\n"
+             << "5. Zakoncz\n"
              << "Wybor: ";
         cin>>choice;
         cout << endl;
@@ -115,9 +126,26 @@ int main()
             product_number = chosen_product - '0';
             if(product_number == i+1) {cout<<endl; break;}
             if(product_number < 1 || product_number > i+1) {cout<<endl; break;}
+            cout << "\n/// " << magazyn[product_number-1].name << " - historia dostaw ///\n";
             magazyn[product_number-1].Show_history();
-            cout<<"aktualnie:";
-            magazyn[product_number-1].Show();
+            cout<<"aktualnie:\n";
+            cout << "liczba sztuk: " << magazyn[product_number-1].quantity << "; cena: " << magazyn[product_number-1].price << endl << endl;
+        }
+        case '4':{
+            int product_number = -1, new_stan=-1, new_price=-1;
+            cout << "Stan magazynu:\n";
+            for(int i=0; i<magazyn.size(); i++){
+                cout << i+1 << ". ";
+                magazyn[i].Show();
+            }
+            cout << "Wybierz element do edycji: ";
+            cin >> product_number;
+            cout << "Wprowadz nowy stan ilosciowy: ";
+            cin >> new_stan;
+            cout << "Wprowadz nowa cene: ";
+            cin >> new_price;
+            magazyn[product_number-1].quantity = new_stan;
+            magazyn[product_number-1].price = new_price;
         }
 
         default:
