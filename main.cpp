@@ -11,10 +11,8 @@ public:
     string name;
     int quantity;
     float price;
-//private:
-vector < float > history_prices;
+    vector < float > history_prices;
     vector < int > history_quantities;
-//public:
     void Add(int qu, float pr){
         history_prices.push_back(price);
         price = pr;
@@ -25,7 +23,7 @@ vector < float > history_prices;
         cout << name << "; liczba sztuk: " << quantity << "; cena: " << price << endl;
     }
 
-    void Show_history(){
+    void Show_history(){ ///! to wyswietlanie ladnie wyrownac
         cout << "Dostawa " << "Liczba sztuk " << "Cena" << endl;
         for(int i=0; i < history_prices.size(); i++){
             cout << i+1 <<"  "<< history_quantities[i] <<"  "<< history_prices[i] << endl;
@@ -47,7 +45,8 @@ int main()
     magazyn[0].name = "Komputery";
     magazyn[0].quantity = 40;
     magazyn[0].price = 124;
-    magazyn[0].history_prices.push_back(100.0); ///tu cos nie dziala z tym
+    magazyn[0].history_prices.push_back(100.0); ///! rand generate tu i tam
+    magazyn[0].history_quantities.push_back(100);
 
 
     char choice='1';
@@ -130,6 +129,7 @@ int main()
             magazyn[product_number-1].Show_history();
             cout<<"aktualnie:\n";
             cout << "liczba sztuk: " << magazyn[product_number-1].quantity << "; cena: " << magazyn[product_number-1].price << endl << endl;
+            break;
         }
         case '4':{
             int product_number = -1, new_stan=-1, new_price=-1;
@@ -146,6 +146,7 @@ int main()
             cin >> new_price;
             magazyn[product_number-1].quantity = new_stan;
             magazyn[product_number-1].price = new_price;
+            break;
         }
 
         default:
