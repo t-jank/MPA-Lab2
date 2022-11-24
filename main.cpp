@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <ctime>
+#include <cmath>
 
 using namespace std;
 
@@ -18,25 +20,22 @@ public:
         price = pr;
         quantity += qu;
     }
-
     void Show(){
         cout << name << "; liczba sztuk: " << quantity << "; cena: " << price << endl;
     }
-
-    void Show_history(){ ///! to wyswietlanie ladnie wyrownac
-        cout << "Dostawa " << "Liczba sztuk " << "Cena" << endl;
+    void Show_history(){
+        cout << "Nr dostawy\t" << "Liczba sztuk\t" << "Cena" << endl;
         for(int i=0; i < history_prices.size(); i++){
-            cout << i+1 <<"  "<< history_quantities[i] <<"  "<< history_prices[i] << endl;
+            cout << i+1 <<"\t\t"<< history_quantities[i] <<"\t\t"<< history_prices[i] << endl;
         }
     }
-
 };
-
 
 
 
 int main()
 {
+    srand( time( NULL ) );
     vector < Product > magazyn;
 
     // reczne wprowadzenie istniejacej bazy
@@ -45,9 +44,16 @@ int main()
     magazyn[0].name = "Komputery";
     magazyn[0].quantity = 40;
     magazyn[0].price = 124;
-    magazyn[0].history_prices.push_back(100.0); ///! rand generate tu i tam
-    magazyn[0].history_quantities.push_back(100);
-
+    magazyn[0].history_prices.push_back(100.0);
+    magazyn[0].history_quantities.push_back(40);
+    for(int i=1;i<50;i++){
+        magazyn[0].history_prices.push_back(round(100*(rand()/float((RAND_MAX))*25.0+100))/100.0);
+        magazyn[0].history_quantities.push_back(rand()%21+30);
+        int x=rand()%100; // pomylka brak przecinka z Pr=20%
+        if(x<20){magazyn[0].history_prices[magazyn[0].history_prices.size()-1] *=100;}
+    }
+    magazyn[0].history_prices.push_back(124.0);
+    magazyn[0].history_quantities.push_back(20);
 
     char choice='1';
     while(choice!='5'){
@@ -87,7 +93,6 @@ int main()
             product_number = chosen_product - '0';
             if(product_number == i+2) {cout<<endl; break;}
             if(product_number < 1 || product_number > i+1) {cout<<endl; break;}
-
             if(product_number==i+1){
                 cout << "Podaj nazwe: ";
                 cin >> name;
@@ -148,11 +153,11 @@ int main()
             magazyn[product_number-1].price = new_price;
             break;
         }
-
         default:
             break;
         }
     }
+
 
     return 0;
 }
