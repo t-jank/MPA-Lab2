@@ -29,6 +29,17 @@ public:
             cout << i+1 <<"\t\t"<< history_quantities[i] <<"\t\t"<< history_prices[i] << endl;
         }
     }
+    float avg=-1,var=-1,sum=0,sumvar=0;
+    void update_variance(){
+        for(int i=0; i < history_prices.size(); i++){
+            sum+=history_prices[i];
+        }
+        avg = sum / history_prices.size();
+        for(int i=0; i < history_prices.size(); i++){
+            sumvar+=pow((history_prices[i]-avg),2);
+        }
+        var = sumvar/history_prices.size();
+    }
 };
 
 
